@@ -32,7 +32,6 @@ module.exports = (sequelize, DataTypes) => {
 
     Wrestler.associate = models => {
         Wrestler.hasMany(models.WrestlersToStates, {
-            // through: models.WrestlersToStates,
             foreignKey: 'wrestler_id',
             otherKey: 'state_id',
             as: 'states',
