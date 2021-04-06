@@ -26,6 +26,36 @@ const getAll = async (req, res) => {
         return res.status(500).json({ error: error.message })
     }
 }
+
+const getWrestlerBySlug = async (req, res) => {
+    try {
+        const wrestlers = await Wrestler.findOne({
+            where: {
+                'slug': req.params.slug
+            },
+            include: [
+                {
+                    model: WrestlersToStates,
+                    as: 'states',
+                    include: [
+                        {
+                            model: WrestlerStates,
+                            as: 'event_state'
+                        }
+                    ]
+                },
+            ]
+        });
+
+        return res.status(201).json({
+            wrestlers,
+        });
+    } catch (error) {
+        return res.status(500).json({ error: error.message })
+    }
+}
+
 module.exports = {
-    getAll
+    getAll,
+    getWrestlerBySlug
 }
