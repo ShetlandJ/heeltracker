@@ -50,7 +50,6 @@ const getWrestlerBySlug = async (req, res) => {
 }
 
 const createWrestler = async (req, res) => {
-    console.log(req);
     const payload = {
         'uuid': uuidv4(),
         'forename': req.body.forename,
