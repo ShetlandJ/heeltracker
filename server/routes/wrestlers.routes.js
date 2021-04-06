@@ -1,7 +1,7 @@
-const router = require('express').Router();
-const wrestlers = require("../controllers/wrestlers.controller.js");
+const { Router } = require('express');
+const controllers = require('../controllers/wrestlers.controller.js');
+const router = Router();
 
-// Retrieve all wrestlers
-router.get("/slug/:slug", wrestlers.findBySlug);
-router.get("/", wrestlers.findAll);
-module.exports = router
+router.get('/', controllers.getAll)
+
+module.exports = router;
