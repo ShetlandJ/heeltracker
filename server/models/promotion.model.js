@@ -14,12 +14,35 @@ const Promotion = (promotion) => {
   this.active = promotion.active;
 };
 
-Promotion.getWrestlersByAlias = (alias, result) => {
+Promotion.getByAlias = (alias, result) => {
   let query = `
+    SELECT * from ${TABLE} wp
+    WHERE wp.alias = '${alias.toUpperCase()}'
+  `;
+
+  sql.query(query, (err, res) => {
+    console.log("res");
+    console.log(res);
+    console.log("res");
+    if (err) {
+      console.log("error: ", err);
+      result(null, err);
+      return;
+    }
+
+    result(null, res[0]);
+  });
+};
+
+
+Promotion.getWrestlersByAlias = (alias, result) => {
+  let promotionQuery = `
+    SELECT * from ${TABLE} wp
+    WHERE wp.alias = '${alias.toUpperCase()}'
+  `;
+
+  const wrestlersQuery = `
     SELECT
-      wp.uuid as promotion_id,
-      wp.name as promotion_name,
-      wp.alias as promotion_alias,
       w.*
     from ${TABLE} wp
       INNER JOIN wrestlers_to_promotions wtp
@@ -30,17 +53,27 @@ Promotion.getWrestlersByAlias = (alias, result) => {
         wp.alias = '${alias.toUpperCase()}'
   `;
 
-  console.log(query.toString());
-
-  sql.query(query, (err, res) => {
+  sql.query(wrestlersQuery, (err, wrestlers) => {
     if (err) {
       console.log("error: ", err);
       result(null, err);
       return;
     }
 
-    result(null, res);
+    sql.query(promotionQuery, function (err, promotion) {
+      if (err) throw err;
+      console.log(promotion);
+      console.log(wrestlers);
+
+
+      result(null, {
+        data: {
+          promotion: promotion[0],
+          wrestlers
+        }
+      });
+    });
   });
-};
+}
 
 module.exports = Promotion;
