@@ -3,16 +3,21 @@ import Header from './components/Header';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
 import Home from './pages/Home';
 import About from './pages/About';
+import { Jumbotron, Container } from 'react-bootstrap';
 import { createBrowserHistory } from 'history'
 
 function App() {
   return (
-    <div className="App">
+    <div className="app">
       <Router history={createBrowserHistory}>
         <Header />
 
-        <Route exact path='/' component={Home} />
-        <Route exact path='/about' component={About} />
+        <Jumbotron fluid className="page-container">
+          <Container>
+            <Route exact path='/' component={Home} />
+            <Route exact path='/about' component={About} />
+          </Container>
+        </Jumbotron>
       </Router>
 
     </div>
