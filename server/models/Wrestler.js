@@ -36,6 +36,11 @@ module.exports = (sequelize, DataTypes) => {
             otherKey: 'state_id',
             as: 'states',
         });
+
+        Wrestler.hasMany(models.WrestlersToPromotions, {
+            foreignKey: 'wrestler_id',
+            otherKey: 'promotion_id',
+        });
     }
 
     return Wrestler;

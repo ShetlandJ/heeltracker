@@ -21,8 +21,10 @@ db.sequelize.sync()
     })
 
 const wrestlerRoutes = require('./routes/wrestlers.routes.js');
+const promotionsRoutes = require('./routes/promotions.routes.js');
 
 app.use("/api/wrestlers", wrestlerRoutes)
+app.use("/api/promotions", promotionsRoutes)
 
 // app.get('/', (req,res) => {
 //     res.send({name: "JAMES"})

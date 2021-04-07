@@ -37,7 +37,6 @@ const getWrestlerBySlug = async (req, res) => {
             where: {
                 'slug': req.params.slug
             },
-            include,
         });
 
         return res.status(201).json({
@@ -73,8 +72,42 @@ const createWrestler = async (req, res) => {
     }
 }
 
+const createWrestlerState = async (req, res) => {
+    try {
+        const wrestler = await Wrestler.findOne({
+            where: {
+                'uuid': req.body.wrestler_id
+            },
+        });
+
+        const state = await WrestlerStates.findOne({
+            where: {
+                'uuid': req.body.state_id,
+            }
+        })
+
+        const payload = {
+            "uuid": uuidv4(),
+            "wrestler_id": wrestler.id,
+            "state_id": state.id,
+            "title": req.body.title,
+            "description": req.body.description,
+            "start": req.body.start,
+            "end": req.body.end,
+        }
+
+        WrestlersToStates.create(payload);
+
+        return res.status(201).json({data: "success"});
+
+    } catch (error) {
+        return res.status(500).json({ error: error.message })
+    }
+}
+
 module.exports = {
     getAll,
     getWrestlerBySlug,
-    createWrestler
+    createWrestler,
+    createWrestlerState
 }
