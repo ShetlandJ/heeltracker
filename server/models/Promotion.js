@@ -11,6 +11,12 @@ module.exports = (sequelize, DataTypes) => {
                 notEmpty: true,
             }
         },
+        description: { type: DataTypes.STRING },
+        image_url: { type: DataTypes.STRING },
+        alias: { type: DataTypes.STRING },
+        founded: { type: DataTypes.INTEGER },
+
+
     }, {
         tableName: 'wrestling_promotions'
     })
