@@ -17,11 +17,10 @@ function Home() {
 
   return (
     <div>
-      Home
-
-      {promotions.length > 0 && promotions.map((promotion) =>
-        <PromotionCard promotion={promotion} />
-      )
+      {
+        promotions.length > 0 && promotions.map((promotion) =>
+          <PromotionCard promotion={promotion} />
+        )
       }
     </div>
   )
